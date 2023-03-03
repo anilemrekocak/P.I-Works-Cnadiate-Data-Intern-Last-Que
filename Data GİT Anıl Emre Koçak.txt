@@ -1,0 +1,108 @@
+1. 
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the CSV file into a pandas DataFrame
+df = pd.read_csv('https://github.com/tarikkranda/pi_intern_question/raw/main/dataset.csv')
+
+# Create a scatter plot of the first two columns with different colors for the two classes
+plt.scatter(df.iloc[:, 0], df.iloc[:, 1], c=df['isVirus'], cmap='coolwarm')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.title('Scatter Plot of First Two Features with Class Labels')
+plt.show()
+
+2.
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv("https://raw.githubusercontent.com/tarikkranda/pi_intern_question/main/dataset.csv")
+
+# Remove duplicates
+df.drop_duplicates(inplace=True)
+
+# Impute missing values
+df.fillna(df.mean(), inplace=True)
+
+# Balance the dataset
+num_virus = df[df['isVirus'] == True].shape[0]
+num_non_virus = df[df['isVirus'] == False].shape[0]
+
+if num_virus > num_non_virus:
+    df = pd.concat([df[df['isVirus'] == True], df[df['isVirus'] == False].sample(num_virus)])
+else:
+    df = pd.concat([df[df['isVirus'] == False], df[df['isVirus'] == True].sample(num_non_virus)])
+
+
+3.
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the dataset
+df = pd.read_csv('https://github.com/tarikkranda/pi_intern_question/blob/main/dataset.csv')
+
+# Check for missing values
+print(df.isnull().sum())  # No missing values
+
+# Check the distribution of the labels
+print(df['isVirus'].value_counts())  # Not balanced
+
+# Visualize the distribution of the labels
+plt.bar(['Non-virus', 'Virus'], df['isVirus'].value_counts())
+plt.title('Distribution of Labels')
+plt.xlabel('Label')
+plt.ylabel('Count')
+plt.show()
+
+# Encode the labels
+df['isVirus'] = df['isVirus'].astype(int)
+
+# Visualize the distribution of the encoded labels
+plt.bar(['Non-virus', 'Virus'], df['isVirus'].value_counts())
+plt.title('Distribution of Encoded Labels')
+plt.xlabel('Label')
+plt.ylabel('Count')
+plt.show() 
+
+//i get a eror while read a data probably i use close network pc on the work or i do not complate this task
+
+4.
+
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load the dataset
+housing_data = pd.read_csv('housing.csv')
+
+# Split the dataset
+X = housing_data.drop('SalePrice', axis=1)
+y = housing_data['SalePrice']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train the model
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+
+# Make predictions
+y_pred = lr.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print('Mean Squared Error:', mse)
+print('R-squared:', r2)
+
+
+If the model does not perform well, we can try the following:
+
+Feature engineering: We can create new features from the existing features or remove irrelevant features to improve the performance of the model.
+
+Regularization: We can use L1 or L2 regularization to prevent overfitting of the model.
+
+Non-linear models: If the relationship between the dependent variable and the independent variables is non-linear, we can use non-linear models such as polynomial regression, decision trees, or random forests.
+
+More data: We can collect more data to improve the performance of the model. More data can help the model learn more about the relationship between the variables.
